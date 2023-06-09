@@ -90,15 +90,16 @@ PL 'https://gitee.com/llwwff/sk'
     let g:skim_buffers_jump = 1
     let g:skim_history_dir = "$cache_X/nvim/skim_history"
 
-    " tab split: 新开一个tab打开所选文件
-    " tab split只是workaround, 先让本buffer多占一个tab, 后续用:buffer等命令
-    let g:sk_editCmd = {
-      "\ \ 'enter'  : '-tab drop', 报错  Vim(drop):E471: Argument required: silent -tab drop
-      \ 'enter'  : '-tab split',
-      \ 'ctrl-t' : '-tab split',
-      \ 'ctrl-e' : 'edit',
-      \ 'ctrl-v' : 'vsplit'
-      \ }
+    "\ /home/wf/PL/sk/autoload/sk_funs.vim里 s:keyStrike_2_editCmd相当于 DIY__key_2_editCmd的默认值
+    "\ 只用keyStrike_2_editCmd就好.
+    "\ DIY__key_2_editCmd放着, 方便以后和官方的repo进行merge
+        "\ let g:DIY__key_2_editCmd = {
+        "\   "\ \ 'enter'  : '-tab drop', 报错  Vim(drop):E471: Argument required: silent -tab drop
+        "\   \ 'enter'  : '-tab split',
+        "\   \ 'ctrl-t' : '-tab split',
+        "\   \ 'ctrl-e' : 'edit',
+        "\   \ 'ctrl-v' : 'vsplit'
+        "\   \ }
 
     " 在这里设颜色:
         " /home/wf/dotF/cfg/nvim/colors/leo_light.vim
@@ -555,7 +556,7 @@ PL 'https://github.com/sisrfeng/leaderF'
         \            ['t', '<cr>'],
         \        ],
         \}
-    " 在rg_cfg.zsh  里设了glob的忽略规则, 所有调用rg的地方都能生效?
+    " 在rg.conf  里设了glob的忽略规则, 所有调用rg的地方都能生效?
 
     " let g:Lf_GtagsfilesCmd = {
     "         \ '.git': 'git ls-files --recurse-submodules',

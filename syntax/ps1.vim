@@ -26,11 +26,14 @@ syn cluster ps1NotTop contains=@ps1Comment,ps1CDocParam,ps1FunctionDeclaration
 
 " Comments and special comment words
 syn keyword ps1CommentTodo TODO FIXME XXX TBD HACK NOTE contained
-syn match ps1CDocParam /.*/ contained
-syn match ps1CommentDoc /^\s*\zs\.\w\+\>/ nextgroup=ps1CDocParam contained
-syn match ps1CommentDoc /#\s*\zs\.\w\+\>/ nextgroup=ps1CDocParam contained
-syn match ps1Comment /#.*/ contains=ps1CommentTodo,ps1CommentDoc,@Spell
-syn region ps1Comment start="<#" end="#>" contains=ps1CommentTodo,ps1CommentDoc,@Spell
+syn match   ps1CDocParam /.*/ contained
+syn match   ps1CommentDoc /^\s*\zs\.\w\+\>/ nextgroup=ps1CDocParam contained
+syn match   ps1CommentDoc /#\s*\zs\.\w\+\>/ nextgroup=ps1CDocParam contained
+
+syn match   ps1Comment /#.*/ contains=ps1CommentTodo,ps1CommentDoc,@Spell,@In_fancY
+syn region  ps1Comment start="<#"
+              \ end="#>"
+              \ contains=ps1CommentTodo,ps1CommentDoc,@Spell,@In_fancY
 
 " Language keywords and elements
 syn keyword ps1Conditional if else elseif switch default

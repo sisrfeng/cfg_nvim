@@ -200,6 +200,9 @@ au My_syn Syntax *  call Bye_alL()
                 \ '\c<(please )?note (also |further )?that>( |,)'                    :  ''          ,
                 \ '\c(do )?keep in mind that>( |,)'                    :  ''          ,
                 \ '\c<note also '                    :  ''          ,
+                "\ \ 丑八怪/装逼/拉丁文/latin
+                \ 'N\.B\.,?'                    :  ''                ,
+                "\ to note
                 \ 'e\.g\.,?'                    :  'שּ'                ,
                 \ 'i\.e\.,?'                    :  'שּ'                ,
                 \ '<note:\s'                        :  ''          ,
@@ -214,7 +217,7 @@ au My_syn Syntax *  call Bye_alL()
                 "\ \ 'https?:\/\/%(gitee.com\/%(llwwff\/))'      :  '♂'  ,
                 \ 'https?:\/\/gitee.com\/'                 :  'שׂ'  ,
                 \ 'https?:\/\/github.com\/'                :  'שּׁ'  ,
-                \ 'https?:\/\/%(github.com|gittee.com)@![^ ]{30,}'  :  '┄' ,
+                \ 'https?:\/\/[^(github.com|gittee.com| )]{30,}'  :  '┄' ,
                 "\ \ 'https?:\/\/%(github.com\/sisrfeng|gittee.com\/llwwff)@![^ ]{30,}'  :  '┄' ,
                 \}
                     "\ 隐藏url:
@@ -297,8 +300,8 @@ au My_syn Syntax python,zsh,tmux    call Bye_all_not_viM()
                               "\ \  "if\\ze.{-} else"        : 'לּ',
                               "\ \  "if .* \\zselse"        : 'כּ',
                              "\ ---
-                              \  "<or>"         : '或',
-                              \  "<and>"        : '且',
+                              "\ \  "<or>"         : '或',
+                              "\ \  "<and>"        : '且',
                         \}
                         "\ python里的rST在下面处理
                         "\ \  '<os\.path\.join'    :'𝔍' ,
@@ -432,6 +435,23 @@ au My_syn Syntax python,zsh,tmux    call Bye_all_not_viM()
                                     \ )
 
          endf
+
+    "\ ps1/pwsh
+    au My_syn Syntax ps1 call Bye_ps1()
+        fun! Bye_ps1()
+             let ps1_byE = {
+                         \  '^\s*\zsif>'                 : '▷' ,
+                         \  '^\s*\zselseif>'             : '▶' ,
+                         \  '^\s*\zselse>'               : '▫' ,
+                         \
+                         \  '^\s*\zsfunction>'           : '£' ,
+                       \}
+
+
+             for [r,c] in items(ps1_byE)
+                 call Match_xX(r, c)
+             endfor
+        endf
 
     " skim的终端(浮窗)
     au My_syn Syntax skim  set syntax=wf_term
@@ -907,9 +927,23 @@ au My_syn Syntax   * call Few_wordS()
         \ contained conceal containedin=gitconfigComment
         \ | hi link gitconfig_com_delI Vim_com_delI
 
-    au My_syn Syntax   zsh     syn match Zsh_com_delI '\v#%( |$)'
+    au My_syn Syntax   zsh     syn match zsh_com_delI '\v#%( |$)'
         \ contained conceal containedin=zshComment
-        \ | hi link Zsh_com_delI Vim_com_delI
+        \ | hi link zsh_com_delI Vim_com_delI
+
+    au My_syn Syntax   bash,sh     call matchadd('Conceal', '^ *\zs# ' , 130, -1, {'conceal': ''})
+
+    "\ 无法隐藏¿# ¿:
+        "\ au My_syn Syntax   bash     syn match bash_com_delI '\v#%( |$)'
+        "\     \ contained conceal containedin=shComment
+        "\     \ | hi link bash_com_delI Vim_com_delI
+        "\
+        "\
+        "\ au My_syn Syntax     sh     syn match   sh_com_delI '\v#%( |$)'
+        "\     \ contained conceal containedin=shComment
+        "\     \ | hi link   sh_com_delI Vim_com_delI
+
+
 
     au My_syn Syntax   dockerfile     syn match dockerfile_com_delI  '^\s*#'
         \ contained conceal containedin=dockerfileComment

@@ -65,10 +65,10 @@
 
     "coc.source.tag.priority"             : 97   ,
     "yank.priority"                       : 96   ,
+    "tabnine.priority"                    : 96 ,
     "coc.source.lsp.priority"             : 95   ,// LS是languageSource, 这个是LSP, 与语言无关?
     "coc.source.snippets.priority"        : 94   ,
     "coc.source.snippets-source.priority" : 93   ,
-    "tabnine.priority"                    : 92 ,
     "coc.source.around.priority"          : 92   ,
     "coc.source.buffer.priority"          : 91   ,
 
@@ -121,7 +121,7 @@
     "coc.preferences.rootPatterns"           :[".git",  ".projections.json"] ,
     "coc.preferences.enableMessageDialog"    :true                           ,
     "coc.preferences.useQuickfixForLocations":true                           ,
-    "coc.preferences.extensionUpdateCheck"   :"weekly"                       ,
+    // "coc.preferences.extensionUpdateCheck"   :"weekly"                       ,  // 默认是never
     "coc.preferences.snippetHighlight"       :true                           ,
         // Use highlight group 'CocSnippetVisual' to highlight placeholders with same index of current one.
     "coc.preferences.jumpCommand"      :"-tab drop",
@@ -297,6 +297,10 @@
             "sh"     : "shfmt"
             },
             "git.enableGutters": false, 
+
+// zsh/bash/ps1/
+    "powershell.integratedConsole.showOnStartup": false
+
 
 // python
 

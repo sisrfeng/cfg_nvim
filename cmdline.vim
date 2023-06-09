@@ -191,7 +191,7 @@ com! -nargs=? -complete=file   S      call Save_aS(<f-args>)
                             \ et    : "noswap -tab drop " . Day_tmp . "/ppp.py",
                             \ etp   : "noswap -tab drop " . Day_tmp . "/ppp.py",
                             \ etv   : "noswap -tab drop " . Day_tmp . "/vvv.vim",
-                            \ etz   : "noswap -tab drop " . Day_tmp . "/zzz.vim",
+                            \ etz   : "noswap -tab drop " . Day_tmp . "/zzz.zsh",
                             \ ett   : "noswap -tab drop " . Day_tmp . "/ttt.txt",
                             \ P     : 'Pwd',
                             \ sn    : 'S ~/dotF/cfg/nvim/',
@@ -288,6 +288,7 @@ com! -nargs=? -complete=file   S      call Save_aS(<f-args>)
                       \ rh :   'zsh/_zfunc/run_help_leo',
                       \ au :   'auto_install/auto_install.sh',
                       \ zb :   'zsh/bind.zsh',
+                      \ env  :   'zsh/.zshenv',
                       \ ahk:   '../../../mnt/f/MS_dotF/key.ahk',
                       \
                       \ az :   'auto_install/auto_install.sh',

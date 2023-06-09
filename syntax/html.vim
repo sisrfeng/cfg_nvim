@@ -21,19 +21,23 @@ syn match htmlError "[<>&]"
 
 
 " tags
-    syn region  htmlString
-                \ contained
-                \ start=+"+
-                \ end=+"+
-                \ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
-                \ conceal
+    "\ oneline是我加的, 避免markdown里 有时整段被conceal
+        syn region  htmlString
+                    \ contained
+                    \ start=+"+
+                    \ end=+"+
+                    \ oneline
+                    \ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
+                    \ conceal
 
-    syn region  htmlString
-                \ contained
-                \ start=+'+
-                \ end=+'+
-                \ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
-                \ conceal
+
+        syn region  htmlString
+                    \ contained
+                    \ start=+'+
+                    \ end=+'+
+                    \ oneline
+                    \ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc
+                    \ conceal
 
     syn match   htmlValue
                 \ contained
@@ -54,6 +58,8 @@ syn match htmlError "[<>&]"
                 "\ \ matchgroup=htmlTag_endS   concealends
                 \ start=#<[^/]#
                   \ end=#>#
+                \ oneline
+                "\   oneline是我加的
                 \ contains=htmlTagN,
                   \htmlString,
                   \htmlArg,
@@ -63,7 +69,7 @@ syn match htmlError "[<>&]"
                   \htmlCssDefinition,
                   \@htmlPreproc,
                   \@htmlArgCluster
-    "\ #
+
 
 
     syn match   htmlTagN      contained
@@ -475,8 +481,27 @@ if main_syntax != 'java' || exists("java_javascript")
     " JAVA SCRIPT
     syn include @htmlJavaScript syntax/javascript.vim
     unlet b:current_syntax
-    syn region  javaScript start=+<script\_[^>]*>+ keepend end=+</script\_[^>]*>+me=s-1 contains=@htmlJavaScript,htmlCssStyleComment,htmlScriptTag,@htmlPreproc
-    syn region  htmlScriptTag     contained start=+<script+ end=+>+ fold contains=htmlTagN,htmlString,htmlArg,htmlValue,htmlTagError,htmlEvent
+    syn region  javaScript
+                        \ start=+<script\_[^>]*>+
+                        \ keepend
+                        \ end=+</script\_[^>]*>+me=s-1
+                        \ contains=@htmlJavaScript,
+                                  \htmlCssStyleComment,
+                                  \htmlScriptTag,
+                                  \@htmlPreproc
+
+    syn region  htmlScriptTag
+                        \ contained
+                        \ start=+<script+
+                        \ end=+>+
+                        \ fold
+                        \ contains=htmlTagN,
+                                  \htmlString,
+                                  \htmlArg,
+                                  \htmlValue,
+                                  \htmlTagError,
+                                  \htmlEvent
+
     hi def link htmlScriptTag htmlTag
 
     " html events (i.e. arguments that include javascript commands)
@@ -507,12 +532,34 @@ syn cluster htmlJavaScript      add=@htmlPreproc
 
 if main_syntax != 'java' || exists("java_css")
     " embedded style sheets
-    syn keyword htmlArg           contained media
+    syn keyword htmlArg   contained   media
     syn include @htmlCss syntax/css.vim
     unlet b:current_syntax
-    syn region cssStyle start=+<style+ keepend end=+</style>+ contains=@htmlCss,htmlTag,htmlEndTag,htmlCssStyleComment,@htmlPreproc
+    syn region  cssStyle
+                \ start=+<style+
+                \ keepend
+                \ end=+</style>+
+                \ contains=@htmlCss,htmlTag,htmlEndTag,htmlCssStyleComment,@htmlPreproc
+
     syn match htmlCssStyleComment contained "\(<!--\|-->\)"
-    syn region htmlCssDefinition matchgroup=htmlArg start='style="' keepend matchgroup=htmlString end='"' contains=css.*Attr,css.*Prop,cssComment,cssLength,cssColor,cssURL,cssImportant,cssError,cssString,@htmlPreproc
+
+    syn region htmlCssDefinition
+                \ matchgroup=htmlArg
+                \ start='style="'
+                \ keepend
+                \ matchgroup=htmlString
+                \ end='"'
+                \ contains=css.*Attr,
+                  \css.*Prop,
+                  \cssComment,
+                  \cssLength,
+                  \cssColor,
+                  \cssURL,
+                  \cssImportant,
+                  \cssError,
+                  \cssString,
+                  \@htmlPreproc
+
     hi def link htmlStyleArg htmlString
 en
 

@@ -1,7 +1,4 @@
-"\ https://github.com/neovim/neovim/pull/20428   remove filetype.vim
-    "\ https://github.com/neovim/neovim/issues/14090#issuecomment-1177933661
-    "\ nvim0.8.0中的过渡方案
-    "\ nvim0.8.1的doc中删了这个变量的说明, 但runtime里还有, 还能用?
+"\ todo: 改用lua
 let g:do_legacy_filetype = 1
 
 au AG BufEnter *massren/temp/*.files.txt  nno <buffer> qq  :echom '不改名了_准备结束massren进程'<cr>:earlier 999999d<cr>:wq<cr>

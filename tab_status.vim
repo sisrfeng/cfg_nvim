@@ -396,9 +396,11 @@ set laststatus=2  "  always show statusline
                                     "\ victory表示vim
                     en
 
+                elseif expand_path =~ 'MS_dotF'
+                    let expand_path   = 'MS-⌂'
                 el
-                    let pieces = expand_path ->split('/dotF/')
-                    let expand_path   = '⌂/' . pieces[-1]
+                    let expand_path   = '⌂'
+                    "\ let expand_path   = '⌂/' . pieces[-1]
                 en
 
             elseif expand_path =~ '~/PL'

@@ -3,21 +3,26 @@ func! funcS#PrinT_N()
     " silent! call AutoPairsToggle()  " 避免自动给我插入成对符号
 
     if &ft == 'python'
-        " todo 加叹号
-        " normal! 表示不允许mapping
-        exe "normal yiWoprint(f'{= }')"
-        exe "normal hhhhp"
+        " todo 用norm!
+        exe "norm yiWoprint(f'{= }')"
+        exe "norm hhhhp"
+    elseif &ft == 'lua'
+        exe "norm yiWoprint(': ', )"
+        exe "norm 5h"
+        exe "norm p"
+        exe "norm 6l"
+        exe "norm p"
     elseif &ft == 'cpp'
-        " exe 'normal yiWocout<<""<<' | exe 'normal hhhpf<lpa<<endl;'
-        exe 'normal yiWocout<<""<<'
-        exe 'normal hhpf<lpa<<endl;'
-    elseif &ft == 'zsh'
-        exe 'normal yiwoecho ${}'
+        " exe 'norm yiWocout<<""<<' | exe 'norm hhhpf<lpa<<endl;'
+        exe 'norm yiWocout<<""<<'
+        exe 'norm hhpf<lpa<<endl;'
+    elseif &ft == 'zsh' || &ft == 'sh'
+        exe 'norm yiwoecho ${}'
                        " ⤴  zsh等号2边没有space, 用W不好
-        exe "normal p"
+        exe "norm p"
     elseif &ft == 'vim'
-        exe 'normal! yiWoechom " 是: "    '
-        normal  pHeelp
+        exe 'norm! yiWoechom " 是: "    '
+        norm  pHeelp
     endif
 
     let b:autopairs_enabled = 1
@@ -28,19 +33,19 @@ func! funcS#PrinT_V()
 
     silent! call AutoPairsToggle()
     if &ft == 'python'
-        exe "normal! gv"
-            " 退到normal mode, 再选中刚才visual mode选中的
+        exe "norm! gv"
+            " 退到norm mode, 再选中刚才visual mode选中的
             " exe "visual y"  visual 是退出ex mode，进入normal mode, 不是在visual mode 执行
             " https://stackoverflow.com/questions/5084428/how-do-i-execute-visual-mode-commands-from-a-vim-function
-        exe "normal! yoprint(f'{= }')"
+        exe "norm! yoprint(f'{= }')"
             " 这样不行:
-                " exe "normal! gv" . "normal! yoprint(f'{= }')"
-        exe "normal! 5hp"
+                " exe "norm! gv" . "norm! yoprint(f'{= }')"
+        exe "norm! 5hp"
     elseif &ft == 'vim'
-        exe "normal! gv"
-        exe 'normal! yoechom " 是: "    '
+        exe "norm! gv"
+        exe 'norm! yoechom " 是: "    '
                            " ⤴ 有空格, 所以要套在exe里
-        exe "normal  pHeelp"
+        exe "norm  pHeelp"
     endif
 
     let b:autopairs_enabled = 1
@@ -94,9 +99,9 @@ endf
     "\         " 括号内部不能换行
     "\     endif
     "\
-    "\     normal G
-    "\     normal o
-    "\     normal o
+    "\     norm G
+    "\     norm o
+    "\     norm o
     "\ endf
 
 
@@ -162,12 +167,26 @@ func! funcS#Conceal_strang_chr_3()
 endf
 
 func! funcS#RuN()
-    exe "w"
+    "\ todo: 关于PATH, .zshrc里有:
+
+
+    exe "write"
 
     if &ft == 'python'
-        exe "Verbose !python3 %"
-        " 跑votenet的某个文件时,若这样执行,pc_util.write_ply没被调用;
-        " 若正常在zsh下敲python执行,则正常(nvim所用的python环境 不是votenet所在环境吧)
+
+        let conda_name = readfile( "/data2/wf2/.cache_wf/conda_name" )[0]
+        if conda_name == 'base'
+            let python_bin = "$HOME/miniconda3/bin/python"
+        elseif conda_name == ''
+            let python_bin = "/usr/bin/python3"
+            let python_bin =  "/home/linuxbrew/.linuxbrew/bin/python3"
+        else
+            let python_bin =  "$HOME/miniconda3/envs/" . conda_name  .  "/bin/python"
+        en
+
+        exe "Verbose  !" .. python_bin .. " -c 'import sys ; print(sys.version)'"
+        exe "Verbose  !" .. python_bin .. " %"
+
     elseif &ft == 'vim'
         exe "message clear | source %"
     elseif &ft == 'sh'
@@ -216,7 +235,7 @@ endf
             return
         en
 
-        echom    'Hi,  Creating directory: '.need_dir
+        echom    'Hi wf, nvim will creates the directory: '.need_dir
         " 虽然没有错误,但会被当作error, 进入Messages:
             " echoerr 'e Creating directory: '.need_dir
 
@@ -230,15 +249,15 @@ endf
 
 
 func! funcS#Out_linE(pattern_str)
-    normal! mo
+    norm! mo
     let @/ =  a:pattern_str
 
     setl foldlevel=3
     setl foldmethod=expr   foldexpr=funcS#See_searcH()
                                 " level为3,4或5  (其实其他数字也行,避开0,1这些经常出现的数字)
                                 " 之前少加funcS#, 不报错, 但是没有效果
-    normal! 'ozM
-        " normal! 'ozMzv
+    norm! 'ozM
+        " norm! 'ozMzv
         " zv: 需要时手动敲
 endf
 
@@ -322,7 +341,8 @@ fun! funcS#Short_iT() abort
               \}
     for [Old,NeW] in items(old2new)
         try
-            exe 'silent! % sub #' . Old . '#' . NeW . '#g'
+            exe 'silent! % sub #\C' . Old . '#' . NeW . '#g'
+                      "\ 之前没加`\C`, 导致句首的'As well as' 被替换成and
         endtry
     endfor
 
@@ -339,7 +359,7 @@ fun! funcS#Short_iT() abort
 
 
     call histdel("search", len(old2new) + len(old2new_) )
-    "\ normal  's     \ 不行 而且给别处添乱
+    "\ norm  's     \ 不行 而且给别处添乱
 endf
 
 

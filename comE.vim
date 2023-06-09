@@ -122,6 +122,7 @@ PL 'https://github.com/sisrfeng/coc-wiki'
               "\ it's recommended to use coc-pyright if you're using python3
               "\ or use coc-jedi if you're using jedi, the code of coc-python is too hard to maintain!
         \
+        \ 'coc-powershell',
         \ 'coc-snippets',
         \ 'coc-tabnine',
                 "\ to make coc.nvim works better with Tabnine,  add `"ignore_all_lsp":  true` to config file of Tabnine.

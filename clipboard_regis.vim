@@ -388,68 +388,75 @@ nno wl   iechom '来啦, '<esc><Cmd>call Get_file_locatioN()<cr>hp
               " gr被占用了: go redo
 
 
-" bracketed paste mode 代替set paste
-" 在ctrl v粘贴时 没有乱缩进了
-" 但ctrl G (map成<C-R>") 还是乱缩进
-    " Code from:
-        "    http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x
-        "    http://www.xfree86.org/current/ctlseqs.html
-    " Docs on mapping fast escape codes in vim
-              " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
-            "    https://coderwall.com/p/if9mda
-            "    https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim
-            "        to fix the escape time problem with insert mode.
+if !has('nvim-0.9')
+"\ nvim0.9开始, 不需要:
+    " bracketed paste mode 代替set paste
+    " 在ctrl v粘贴时 没有乱缩进了
+    " 但ctrl G (map成<C-R>") 还是乱缩进
+        " Code from:
+            "    http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x
+            "    http://www.xfree86.org/current/ctlseqs.html
+        " Docs on mapping fast escape codes in vim
+                " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+                "    https://coderwall.com/p/if9mda
+                "    https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim
+                "        to fix the escape time problem with insert mode.
 
 
-    " 作者为了把这功能 封装为插件, 才需要这几行?
-        " if exists("g:loaded_bracketed_paste")
-        "     finish
-        " endif
-        " let g:loaded_bracketed_paste = 1
-        "
+        " 作者为了把这功能 封装为插件, 才需要这几行?
+            " if exists("g:loaded_bracketed_paste")
+            "     finish
+            " endif
+            " let g:loaded_bracketed_paste = 1
+            "
 
-    " let &t_ti .= "hhhhhhhhhhhh"
-        " 为了兼容, 设了这个变量, nvim也不报错?
-        " let &aaaaaaaaaa .= "hhhhhhhhhhhh"
-        " || E355: Unknown option: aaaaaaaaaa
-        " 但是:
-        "      set t_ti?  报错
+        " let &t_ti .= "hhhhhhhhhhhh"
+            " 为了兼容, 设了这个变量, nvim也不报错?
+            " let &aaaaaaaaaa .= "hhhhhhhhhhhh"
+            " || E355: Unknown option: aaaaaaaaaa
+            " 但是:
+            "      set t_ti?  报错
 
-        " Nvim does not have special `t_XX` options
-        " no <t_XX> keycodes to configure  terminal capabilities.
-        " Instead Nvim treats the terminal as gui?
+            " Nvim does not have special `t_XX` options
+            " no <t_XX> keycodes to configure  terminal capabilities.
+            " Instead Nvim treats the terminal as gui?
 
 
-    fun! XTermPaste(ret)
-        set pastetoggle=<f29>
-        set paste
-        return a:ret
-    endfunc
 
-    exe     "set <f28>=\<Esc>[200~"
-    map  <expr> <f28> XTermPasteBegin("i")
-    imap <expr> <f28> XTermPasteBegin("")
-    vmap <expr> <f28> XTermPasteBegin("c")
-    cmap <f28>  <nop>
+        fun! XTermPaste(ret)
+            set pastetoggle=<f29>
+            set paste
+            return a:ret
+        endfunc
+            "\ ctrl + F1  <F25>
+            "\ ...
+            "\      + F5  <F29>
 
-    exe     "set <f29>=\<Esc>[201~"
-    cmap <f29>  <nop>
+        exe     "set <f28>=\<Esc>[200~"
+        map  <expr> <f28> XTermPasteBegin("i")
+        imap <expr> <f28> XTermPasteBegin("")
+        vmap <expr> <f28> XTermPasteBegin("c")
+        cmap <f28>  <nop>
 
-    " 我之前的不太好的方案
-        " inor <F9> <esc>:call  Paste_toggle()<cr>i
-        "
-        " func! Paste_toggle()
-        "     set paste!
-        "     if &paste == 0
-        "         echo '不是paste mode'
-        "     else
-        "         echo '进了paste mode, 放心按ctrl v吧'
-        "     endif
-        " endfunc
+        exe     "set <f29>=\<Esc>[201~"
+        cmap <f29>  <nop>
 
-            " vim(而非nvim)里 不用设set paste也不会乱缩进.
-                " (但手动敲 还是不会缩进, 因为vim没开语法提示?)
-            " set paste后, cabbrv不生效.
-            " windows terminal默认开了bracketed paste mode?
-            " 但还是要set paste
-            " https://github.com/microsoft/terminal/issues/9364
+        " 我之前的不太好的方案
+            " inor <F9> <esc>:call  Paste_toggle()<cr>i
+            "
+            " func! Paste_toggle()
+            "     set paste!
+            "     if &paste == 0
+            "         echo '不是paste mode'
+            "     else
+            "         echo '进了paste mode, 放心按ctrl v吧'
+            "     endif
+            " endfunc
+
+                " vim(而非nvim)里 不用设set paste也不会乱缩进.
+                    " (但手动敲 还是不会缩进, 因为vim没开语法提示?)
+                " set paste后, cabbrv不生效.
+                " windows terminal默认开了bracketed paste mode?
+                " 但还是要set paste
+                " https://github.com/microsoft/terminal/issues/9364
+en

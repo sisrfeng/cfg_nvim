@@ -256,7 +256,9 @@ require('neorg').setup {
         -- local dap  =  require("dap")
         -- local dapui = require("dapui") 
         --
-    vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+    -- vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+    vim.fn.sign_define('DapBreakpoint', {text='▸', texthl='', linehl='', numhl=''})
+    
         
         dap.defaults.fallback.focus_terminal = true  
         dap.defaults.fallback.terminal_win_cmd = '70vsplit new'
@@ -353,12 +355,12 @@ require('neorg').setup {
                                                     --   and `externalTerminal`, 
             justMyCode =  false ;
             redirectOutput  = true ;
-            -- python     = {"/home/wf/d/anaconda3/envs/t_pool3/bin/python3", "-W", "ignore"} ;
+            -- python     = {"/home/wf/d/miniconda3/envs/t_pool3/bin/python3", "-W", "ignore"} ;
                          -- debugpy里好像说 这要求是个array, lua的array用 {xxxxx, yyyy}
             -- "pythonPath" is not valid if "python" is specified
-            -- pythonPath = '~/d/anaconda3/envs/t_pool3/bin/python3' ,
+            -- pythonPath = '~/d/miniconda3/envs/t_pool3/bin/python3' ,
                         -- todo:
-                        -- $HOME/anaconda3/envs/$(cat $cache_X/conda_name)/bin/python3 
+                        -- $HOME/miniconda3/envs/$(cat $cache_X/conda_name)/bin/python3 
 
                         -- 或
                         -- pythonPath = function()
@@ -441,4 +443,12 @@ require('neorg').setup {
     --     }
     -- }
 -- })
+
+
+vim.filetype.add({
+    extension = {
+        ['crontab']  = 'crontab' ,
+    },
+})
+
 

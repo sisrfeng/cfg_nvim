@@ -35,7 +35,7 @@ PL 'https://gitee.com/llwwff/pluger'
 
 if !exists('g:vscode')
     "\ markup(标记语言)  排版
-        PL 'https://github.com/sisrfeng/nvim_1Clause_1Line'
+        "\ PL 'https://github.com/sisrfeng/nvim_1Clause_1Line'
         "\ PL 'https://github.com/sisrfeng/pencil'  "\ 智能处理缩进, 需要再研究
         PL 'https://gitee.com/llwwff/markdown'
             let g:vim_markdown_toc_autofit = 1
@@ -116,7 +116,7 @@ if !exists('g:vscode')
             " au AG StdinReadPre * let s:std_in=1
             " au AG VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
-    PL 'https://github.com/sisrfeng/git-vim'  "  /tpope/vim-fugitive'
+    PL 'https://gitee.com/llwwff/git-vim'  "  /tpope/vim-fugitive'
     PL 'https://github.com/sisrfeng/tig-vim'
         nno  <Leader>ti :TigOpenCurrentFile<CR>
         " open tig with Project root path
@@ -186,6 +186,7 @@ if !exists('g:vscode')
         PL 'https://github.com/sisrfeng/debugAP-ui'
             nn   <F29>     : lua require("dapui").toggle()<cr>
             nn   <c-F5>    : lua require("dapui").toggle()<cr>
+
             vno  <M-K>      <Cmd>lua require("dapui").eval()<CR>
             "\ 其他的在
             "\ /home/wf/dotF/cfg/nvim/lua/my_cfg.lua
@@ -545,7 +546,7 @@ source $nV/fuzzy.vim
     " align相关
         " PL 'https://github.com/kg8m/vim-simple-align'
         " todo:号称比easy align简单
-        PL 'https://github.com/sisrfeng/align'
+        PL 'https://gitee.com/llwwff/align'
 
         " todo: autopep8一键处理, 代替wrapA?
         "
@@ -736,8 +737,7 @@ source $nV/fuzzy.vim
             " vim-doge
             "let g:doge_mapping = '<Leader>dc'
 
-    "\ PL 'https://github.com/sisrfeng/textObj-pairs'
-    PL 'https://github.com/sisrfeng/textObj-dual'
+    PL 'https://gitee.com/llwwff/textObj-dual'
         " q通配任意quote,
         " <space>通配任意所支持的符号(叹号等, 但不支持括号. 括号2端不一样, 而¿"¿等 是一样的)
 

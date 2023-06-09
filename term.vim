@@ -91,7 +91,6 @@
     endf
 
 
-
 tno <M-C-D>   <C-\><C-N>:bd!<cr>
 "\ zsh嵌套时, 方便快速退出
 

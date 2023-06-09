@@ -1,4 +1,4 @@
-" Language:                     shell (sh) Korn shell (ksh) bash (sh)
+" Language:                     shell (sh)   Korn shell (ksh) bash (sh)
 " Last Change:                  Oct 26, 2021
 " Version:                      199
 " URL:                          http://www.drchip.org/astronaut/vim/index.html#SYNTAX_SH

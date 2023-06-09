@@ -19,7 +19,9 @@ fun! Short_is_beautY()
                         " '[某某]某某某某] 方括号里的方括号, 表示literal的]
                         " 加这行, 避免标点符号单独成行?
                         " 还是不行:
-                    let pause_right .=  '[,;.!?:]'
+                    let pause_right .=  '[,;.!?:-]'
+                                     "\   符号`-`是为了对付这种: Kubernetes IP addresses exist at the `Pod` scope -  containers within a `Pod`
+                                            "
             let pause_right .=   ')'
 
         let pause_right .=  '|'
@@ -75,6 +77,9 @@ fun! Short_is_beautY()
                         let rightS ->add(  'that is'               )
                         let rightS ->add(  'the assumption that'   )
                         let rightS ->add(  'without the need of'   )
+                        "\ 不行:
+                        "\ let rightS ->add(  '-'   )  "\ 对付这种: Kubernetes IP addresses exist at the `Pod` scope - containers within a `Pod`
+
                     let pause_right .=   rightS ->join('|')
             let pause_right .=         ')' . '>'
 

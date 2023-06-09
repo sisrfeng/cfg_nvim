@@ -276,10 +276,12 @@ let mapleader = " "
                               \latex,
                               \conf,
                               \pyh,
-                              \txt,
+                              \text,
                               \mm
                     \ silent!  au AG BufWritePre  <buffer=abuf>  call <SID>Remove_end_white_space()
                     "\ \ silent!  au AG BufWritePre  <buffer>  call <SID>Remove_end_white_space()
+
+                               "\ text, 而非txt
 
         "\ silent!  au AG BufWritePre  <buffer>  call <SID>Remove_end_white_space()
 

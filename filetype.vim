@@ -1,6 +1,8 @@
-"\ todo: nvim0.9将不再使用filetype.vim, 用filetype.lua代替
-"\ 但本文件还有效
-"\ 是因为放在自己的目录下, 就不会被覆盖?
+"\ todo: 改用lua设置filetype
+        "\ /home/wf/dotF/cfg/nvim/lua/my_cfg.lua里面有vim.filetype.add
+
+"\ 这里也要改: /home/wf/dotF/cfg/nvim/b_map.vim
+
 
 if exists("did_load_filetypes")  | finish  | endif
           " did_load_filetypes是global的变量??

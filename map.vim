@@ -10,10 +10,7 @@
 
 
 "\ notes
-    "\ 1.  Key notation pairs <Tab>/<C-I>, <CR>/<C-M>, <Esc>/<C-[> are no longer treated as the same. #17825
-        " 但终端无法分辨<cr>和<c-m> ??
-
-    "\ 2. 千万别map  hjkl  导致移动很卡
+     "\ 千万别map  hjkl  导致移动很卡
 
 
 
@@ -79,15 +76,22 @@ nno <M-h>  <Cmd>Helptags<cr>
 nno <Leader>F   "fyiw:Verbose func    g:<c-r>f
 nno <Leader>C   "cyiw:Verbose command <c-r>c
 
-nno <BS>  viWr |
-vno <BS>     r |
+"\ 抹掉某内容
+    nno <BS>  viW"dy
+             \viWr |
+        "\ 如果不加`|`, 空格会autocmd bufwrite被删掉
+        "dy  yank到d这个register
 
-vno <Leader><Leader>      r |
-"\ vno <Leader>              r |
+    vno <BS>  "dy<esc>
+             \gvr |
 
-nno <Leader><Leader>   viWr |
-"\ nno <Leader>           viWr |
-    "\ 敲<Leader>某某时,容易错手删掉内容
+    "\ 只用<BS>就好
+        "\ vno <Leader><Leader>      r |
+        "\ "\ vno <Leader>              r |
+        "\
+        "\ nno <Leader><Leader>   viWr |
+        "\ "\ nno <Leader>           viWr |
+        "\     "\ 敲<Leader>某某时,容易错手删掉内容
 
 
 "\ nno <buffer> <Leader>V  <Cmd>call View_anywhere()<cr>
@@ -278,7 +282,7 @@ nno <cr> <c-]>
 vno <C-CR> <c-]>
 nno <C-CR> <c-]>
 " windows terminal里<c-cr>识别为<c-j>
-" 敲<c-m> 可以识别为回车 ,
+
 
 
 "timeout
@@ -337,9 +341,11 @@ nno <C-CR> <c-]>
     "              \<Cmd>BLines<cr>
     nno   <M-/>    ms
                   \<Cmd>BLines<cr>
+
     vno   <M-/>    "sy
                   \ms
                    \<Cmd>BLines<cr>
+                   \<C-\><C-N>p<Esc>a
 
              "\ \<Cmd>let g:current_line_for_BLines = line(".")<cr>
 
@@ -629,7 +635,9 @@ vno <Up> :<esc><C-O>
     " vno <Up> <Esc><C-O>  " 不行
 
 nno <Down> <C-I>
-    " CTRL-I 等价于<Tab>
+    "\ 1.  Key notation pairs <Tab>/<C-I>, <CR>/<C-M>, <Esc>/<C-[> are no longer treated as the same. #17825
+        " 但终端无法分辨<cr>和<c-m> ??
+
 vno <Down> :<esc><C-I>
 
 
@@ -671,7 +679,12 @@ nno <S-Left> <Cmd>cd ..<CR><Cmd>pwd<CR>
         " cnor <C-Right> <c-r><c-w><CR>
 
     nno <m-s-u> :echom 'hihi'<CR>
-    " nno <c-m> :echom 'mmmmm'<CR>  " 它就是enter!
+    "\ 都和CR一样:
+    "\ nno <C-M> :echom 'mmmmm'<CR>
+    "\ nno <c-M> :echom 'mmmmm'<CR>
+    "\ nno <c-m> :echom 'mmmmm'<CR>
+    "\ nno <C-m> :echom 'mmmmm'<CR>
+
 
 
 nno gd :vsplit<CR>md<C-]>
@@ -1172,7 +1185,7 @@ cnor <Down> <c-n>
             "     " let g:far#source="ag"
             "     let g:far#source="rgnvim"
             "
-            "     " let g:far#ignore_files = [ "/home/wf/dotF/cfg/rg/far_ignore.yml" ]
+            "     " let g:far#ignore_files = [ "/home/wf/dotF/cfg/rg/rg_FaR.ignore" ]
             "         " A list. Files of rules to ignore file during matching.
             "
             "     " far.vim find
